@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: simple_tools
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://118.25.64.160:3306/simple_tools
+      username: root
+      password: wzh7230610
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/**/*.xml
