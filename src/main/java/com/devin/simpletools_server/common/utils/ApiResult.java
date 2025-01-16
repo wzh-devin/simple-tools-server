@@ -34,7 +34,7 @@ public class ApiResult<T> {
 
     public static <T> ApiResult<T> fail(String errCode, String errMsg) {
         ApiResult<T> result = new ApiResult<>();
-        result.setSuccess(true);
+        result.setSuccess(false);
         result.setErrCode(errCode);
         result.setErrMsg(errMsg);
         return result;
