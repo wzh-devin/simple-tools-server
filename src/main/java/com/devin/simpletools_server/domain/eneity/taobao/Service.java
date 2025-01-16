@@ -38,7 +38,7 @@ public class Service implements Serializable {
     /**
      * 服务描述
      */
-    private String desc;
+    private String serviceDesc;
 
     /**
      * 商品是否激活（1：正常，0：失效）

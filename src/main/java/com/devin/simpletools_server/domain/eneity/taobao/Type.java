@@ -39,7 +39,7 @@ public class Type implements Serializable {
     /**
      * 类型描述
      */
-    private String desc;
+    private String typeDesc;
 
     /**
      * 类型创建时间
