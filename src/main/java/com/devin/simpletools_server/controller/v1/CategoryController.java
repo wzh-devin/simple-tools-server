@@ -1,9 +1,14 @@
 package com.devin.simpletools_server.controller.v1;
 
 import com.devin.simpletools_server.common.annocation.ApiV1;
+import com.devin.simpletools_server.common.utils.ApiResult;
+import com.devin.simpletools_server.domain.eneity.taobao.Category;
+import com.devin.simpletools_server.domain.vo.req.CategoryReq;
+import com.devin.simpletools_server.service.v1.taobao.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 2025/1/17 19:29
@@ -16,7 +21,60 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @ApiV1
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/taobao/category")
 @RequiredArgsConstructor
 public class CategoryController {
+
+    private final CategoryService categoryService;
+
+    /**
+     * 获取所有的类别
+     * @return
+     */
+    @GetMapping("/getAll")
+    public ApiResult<List<Category>> getAllList() {
+        return ApiResult.success(categoryService.getAllList());
+    }
+
+    /**
+     * 根据参数获取类别
+     * @param categoryReq
+     * @return
+     */
+    @GetMapping("/getListByParams")
+    public ApiResult<List<Category>> getListByParams(@RequestBody CategoryReq categoryReq) {
+        return ApiResult.success(categoryService.getListByParams(categoryReq));
+    }
+
+    /**
+     * 新增一级类别
+     * @param categoryReq
+     * @return
+     */
+    @PostMapping("/addCategory")
+    public ApiResult<Void> addCategory(@RequestBody CategoryReq categoryReq) {
+        categoryService.addCategory(categoryReq);
+        return ApiResult.success();
+    }
+
+    /**
+     * 修改一级类目
+     * @param categoryReq
+     * @return
+     */
+    @PostMapping("/editCategory")
+    public ApiResult<Void> editCategory(@RequestBody CategoryReq categoryReq) {
+        categoryService.editCategory(categoryReq);
+        return ApiResult.success();
+    }
+
+    /**
+     * 删除一级类目
+     * @return
+     */
+    @PostMapping("/deleteCategory")
+    public ApiResult<Void> deleteCategory(@RequestBody CategoryReq categoryReq) {
+        categoryService.deleteCategory(categoryReq);
+        return ApiResult.success();
+    }
 }

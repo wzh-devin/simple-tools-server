@@ -1,5 +1,10 @@
 package com.devin.simpletools_server.service.v1.taobao;
 
+import com.devin.simpletools_server.domain.eneity.taobao.Category;
+import com.devin.simpletools_server.domain.vo.req.CategoryReq;
+
+import java.util.List;
+
 /**
  * 2025/1/17 19:30
  * <p></p>
@@ -8,4 +13,35 @@ package com.devin.simpletools_server.service.v1.taobao;
  * @since 1.0
  */
 public interface CategoryService {
+
+    /**
+     * 获取所有的类别
+     * @return
+     */
+    List<Category> getAllList();
+
+    /**
+     * 根据参数，获取对应的类别
+     * @param categoryReq
+     * @return
+     */
+    List<Category> getListByParams(CategoryReq categoryReq);
+
+    /**
+     * 新增类别
+     * @param categoryReq
+     */
+    void addCategory(CategoryReq categoryReq);
+
+    /**
+     * 修改一级类目
+     * @param categoryReq
+     */
+    void editCategory(CategoryReq categoryReq);
+
+    /**
+     * 删除一级类目
+     * @param categoryReq
+     */
+    void deleteCategory(CategoryReq categoryReq);
 }
