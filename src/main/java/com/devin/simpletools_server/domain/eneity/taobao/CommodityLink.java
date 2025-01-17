@@ -29,6 +29,9 @@ public class CommodityLink {
     @TableField("link")
     private String link;
 
+    @TableField("oper_sys")
+    private String operSys;
+
     @TableField("description")
     private String description;
 
