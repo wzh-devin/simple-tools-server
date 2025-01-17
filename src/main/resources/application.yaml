@@ -1,12 +1,14 @@
 spring:
   application:
     name: simple_tools
+  profiles:
+    active: dev
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://118.25.64.160:3306/simple_tools
-      username: root
-      password: wzh7230610
+      url: jdbc:mysql://${simpletools.mysql.host}:${simpletools.mysql.port}/${simpletools.mysql.db}
+      username: ${simpletools.mysql.username}
+      password: ${simpletools.mysql.password}
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
