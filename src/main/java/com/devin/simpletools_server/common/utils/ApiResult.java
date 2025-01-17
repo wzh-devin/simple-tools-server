@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class ApiResult<T> {
     private Boolean success;
-    private String errCode;
+    private Integer errCode;
     private String errMsg;
     private T data;
 
@@ -32,7 +32,7 @@ public class ApiResult<T> {
         return result;
     }
 
-    public static <T> ApiResult<T> fail(String errCode, String errMsg) {
+    public static <T> ApiResult<T> fail(Integer errCode, String errMsg) {
         ApiResult<T> result = new ApiResult<>();
         result.setSuccess(false);
         result.setErrCode(errCode);
