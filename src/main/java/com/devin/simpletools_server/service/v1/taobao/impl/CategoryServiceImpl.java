@@ -1,6 +1,5 @@
 package com.devin.simpletools_server.service.v1.taobao.impl;
 
-import com.devin.simpletools_server.common.constant.FailMsgConstant;
 import com.devin.simpletools_server.common.enums.OperateTypeEnum;
 import com.devin.simpletools_server.common.utils.AssertUtil;
 import com.devin.simpletools_server.dao.v1.taobao.CategoryDao;
