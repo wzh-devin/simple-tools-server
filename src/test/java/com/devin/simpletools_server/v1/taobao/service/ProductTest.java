@@ -1,8 +1,6 @@
 package com.devin.simpletools_server.v1.taobao.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.devin.simpletools_server.domain.eneity.taobao.Prod;
-import com.devin.simpletools_server.mapper.v1.taobao.ProdMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
