@@ -1,10 +1,13 @@
-package com.devin.simpletools_server.common.enums;
+package com.devin.simpletools_server.common.exception;
 
-import com.devin.simpletools_server.common.exception.BusinessException;
+import com.devin.simpletools_server.common.enums.HttpErrorEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
@@ -20,14 +23,17 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @Autowired
+    private HttpServletResponse response;
+
     /**
      * 业务异常处理器
      * @param e
      */
     @ExceptionHandler(BusinessException.class)
-    public void globalExceptionHandler(BusinessException e) {
+    public void globalExceptionHandler(BusinessException e) throws IOException {
         log.error("业务异常: {}", e.getMessage());
-        // TODO：后续返回给前端
+        HttpErrorEnum.BUSINESS_ERROR.sendHttpError(response);
     }
 
     /**
@@ -35,10 +41,11 @@ public class GlobalExceptionHandler {
      * @param e
      */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public void SQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
+    public void SQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) throws IOException {
         if (e.getMessage().startsWith("Duplicate entry")) {
-            log.error("唯一性约束异常: {} 已经存在", e.getMessage().split(" ")[2]);
-            // TODO: 返回给前端
+            String name = e.getMessage().split(" ")[2].concat("已经存在");
+            log.error("唯一性约束异常: {}", name);
+            HttpErrorEnum.BUSINESS_ERROR.sendHttpError(response, name);
         }
     }
 }
