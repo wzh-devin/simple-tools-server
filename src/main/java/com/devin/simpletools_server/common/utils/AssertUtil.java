@@ -2,6 +2,7 @@ package com.devin.simpletools_server.common.utils;
 
 import com.devin.simpletools_server.common.enums.BusinessErrorEnum;
 import com.devin.simpletools_server.common.exception.BusinessException;
+import org.springframework.util.ObjectUtils;
 
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -57,7 +58,7 @@ public class AssertUtil {
      * @param msg
      */
     public static void isEmpty(Object o, String msg) {
-        if (!Objects.isNull(o)) {
+        if (!ObjectUtils.isEmpty(o)) {
             throwException(msg);
         }
     }
@@ -69,7 +70,7 @@ public class AssertUtil {
      * @param msg
      */
     public static void isNotEmpty(Object o, String msg) {
-        if (Objects.isNull(o)) {
+        if (ObjectUtils.isEmpty(o)) {
             throwException(msg);
         }
     }
