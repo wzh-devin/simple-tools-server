@@ -24,8 +24,8 @@ import java.text.MessageFormat;
 @AllArgsConstructor
 public enum HttpErrorEnum {
 
-    SYS_ERROR(503, "系统异常{0}"),
-    BUSINESS_ERROR(500, "业务处理异常{0}")
+    SYS_ERROR(503, "系统异常: {0}"),
+    BUSINESS_ERROR(500, "业务处理异常: {0}")
     ;
 
     private final Integer errCode;

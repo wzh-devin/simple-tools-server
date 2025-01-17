@@ -17,7 +17,7 @@ import lombok.Getter;
 public enum BusinessErrorEnum {
 
     SYSTEM_ERROR(-1, "系统异常"),
-    BUSINESS_ERROR(1001, "业务异常===>{0}"),
+    BUSINESS_ERROR(1001, "{0}"),
     ;
 
     private final Integer errCode;
