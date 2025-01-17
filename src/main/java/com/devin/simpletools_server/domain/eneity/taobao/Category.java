@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 2025/1/17 18:51
@@ -32,8 +34,19 @@ public class Category {
     private Integer isActive;
 
     @TableField("create_time")
-    private LocalDate createTime;
+    private LocalDateTime createTime;
 
     @TableField("update_time")
-    private LocalDate updateTime;
+    private LocalDateTime updateTime;
+
+    @TableField(exist = false)
+    private List<CategoryItem> items;
+
+    /**
+     * 填充时间
+     */
+    public void fillTime() {
+        this.createTime = LocalDateTime.now();
+        this.updateTime = LocalDateTime.now();
+    }
 }
