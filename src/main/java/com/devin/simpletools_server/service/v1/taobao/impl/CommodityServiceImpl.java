@@ -17,6 +17,8 @@ import com.devin.simpletools_server.service.v1.taobao.CommodityService;
 import com.devin.simpletools_server.service.v1.taobao.builder.BuilderEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class CommodityServiceImpl implements CommodityService {
     private final CategoryDao categoryDao;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addCommodity(CommodityReq commodityReq) {
         Commodity commodity = BuilderEntity.buildCommodity(commodityReq, OperateTypeEnum.ADD);
         boolean saveResult = commodityDao.save(commodity);
@@ -73,6 +76,7 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void editCommodity(CommodityReq commodityReq) {
         Commodity commodity = BuilderEntity.buildCommodity(commodityReq, OperateTypeEnum.UPDATE);
         boolean updateResult = commodityDao.updateById(commodity);
@@ -80,6 +84,7 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteCommodity(Long commodityId) {
         // 查询是否含有链接
         List<CommodityLink> commodityLinks = commodityLinkDao.selectByCommodityId(commodityId);
