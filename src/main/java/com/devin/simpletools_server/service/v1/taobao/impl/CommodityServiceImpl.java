@@ -71,11 +71,6 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public List<CommodityLink> getLinks(Long commodityId) {
-        return commodityLinkDao.selectByCommodityId(commodityId);
-    }
-
-    @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void editCommodity(CommodityReq commodityReq) {
         Commodity commodity = BuilderEntity.buildCommodity(commodityReq, OperateTypeEnum.UPDATE);
@@ -93,5 +88,31 @@ public class CommodityServiceImpl implements CommodityService {
         // 删除商品
         boolean delResult = commodityDao.removeById(commodityId);
         AssertUtil.isTrue(delResult, "商品信息删除失败");
+    }
+
+    @Override
+    public List<CommodityLink> getLinks(Long commodityId) {
+        return commodityLinkDao.selectByCommodityId(commodityId);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void addLinks(CommodityLink commodityLink) {
+        boolean saveResult = commodityLinkDao.save(commodityLink);
+        AssertUtil.isTrue(saveResult, "新增链接失败");
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void editLinks(CommodityLink commodityLink) {
+        boolean updateResult = commodityLinkDao.updateById(commodityLink);
+        AssertUtil.isTrue(updateResult, "修改链接失败");
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void batchDeleteLinks(List<Long> linkIds) {
+        boolean deleteLinks = commodityLinkDao.removeBatchByIds(linkIds);
+        AssertUtil.isTrue(deleteLinks, "批量删除链接失败");
     }
 }
