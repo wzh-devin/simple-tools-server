@@ -7,7 +7,6 @@ import com.devin.simpletools_server.domain.eneity.taobao.CommodityLink;
 import com.devin.simpletools_server.domain.vo.req.CommodityReq;
 import com.devin.simpletools_server.service.v1.taobao.CommodityService;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Result;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -79,5 +78,38 @@ public class CommodityController {
     @GetMapping("/getLinks")
     public ApiResult<List<CommodityLink>> getLinks(@RequestParam("commodityId") Long commodityId) {
         return ApiResult.success(commodityService.getLinks(commodityId));
+    }
+
+    /**
+     * 添加商品链接
+     * @param commodityLink
+     * @return
+     */
+    @PostMapping("/addLinks")
+    public ApiResult<Void> addLinks(@RequestBody CommodityLink commodityLink) {
+        commodityService.addLinks(commodityLink);
+        return ApiResult.success();
+    }
+
+    /**
+     * 修改商品链接
+     * @param commodityLink
+     * @return
+     */
+    @PostMapping("/editLinks")
+    public ApiResult<Void> editLinks(@RequestBody CommodityLink commodityLink) {
+        commodityService.editLinks(commodityLink);
+        return ApiResult.success();
+    }
+
+    /**
+     * 批量删除链接
+     * @param linkIds
+     * @return
+     */
+    @PostMapping("/deleteLinks")
+    public ApiResult<Void> deleteLinks(@RequestParam("linkIds") List<Long> linkIds) {
+        commodityService.batchDeleteLinks(linkIds);
+        return ApiResult.success();
     }
 }
