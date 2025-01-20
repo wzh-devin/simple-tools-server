@@ -3,8 +3,12 @@ package com.devin.simpletools_server.domain.eneity.taobao;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +26,7 @@ import java.util.List;
 @TableName("category")
 public class Category {
     @TableId
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @TableField("name")

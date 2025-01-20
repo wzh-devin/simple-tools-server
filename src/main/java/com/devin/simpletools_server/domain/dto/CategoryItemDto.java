@@ -1,6 +1,8 @@
 package com.devin.simpletools_server.domain.dto;
 
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,11 +21,13 @@ public class CategoryItemDto {
     /**
      * 二级类别id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long categoryItemId;
 
     /**
      * 二级类别的所属一级类目
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long categoryId;
 
     /**

@@ -1,6 +1,8 @@
 package com.devin.simpletools_server.domain.dto;
 
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,6 +21,7 @@ public class CommodityDto {
     /**
      * 商品id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long commodityId;
 
     /**
