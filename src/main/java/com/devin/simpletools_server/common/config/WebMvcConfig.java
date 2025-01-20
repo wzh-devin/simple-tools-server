@@ -2,6 +2,7 @@ package com.devin.simpletools_server.common.config;
 
 import com.devin.simpletools_server.common.annocation.ApiV1;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,6 +17,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOriginPatterns("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowCredentials(true)
+                .maxAge(3600);
+    }
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
