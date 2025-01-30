@@ -42,10 +42,10 @@ public class CategoryDao extends ServiceImpl<CategoryMapper, Category> {
         return lambdaQuery()
                 .eq(!Objects.isNull(categoryReq.getIsActive()),
                         Category::getIsActive, categoryReq.getIsActive())
-                .eq(!Objects.isNull(categoryReq.getCategoryId()),
-                        Category::getId, categoryReq.getCategoryId())
-                .eq(!StringUtils.isEmpty(categoryReq.getCategoryName()),
-                        Category::getName, categoryReq.getCategoryName())
+                .eq(!Objects.isNull(categoryReq.getId()),
+                        Category::getId, categoryReq.getId())
+                .eq(!StringUtils.isEmpty(categoryReq.getName()),
+                        Category::getName, categoryReq.getName())
                 .list();
     }
 }

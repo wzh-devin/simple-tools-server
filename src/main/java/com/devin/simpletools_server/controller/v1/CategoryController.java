@@ -3,6 +3,7 @@ package com.devin.simpletools_server.controller.v1;
 import com.devin.simpletools_server.common.annocation.ApiV1;
 import com.devin.simpletools_server.common.utils.ApiResult;
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
+import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
 import com.devin.simpletools_server.domain.vo.req.CategoryReq;
 import com.devin.simpletools_server.service.v1.taobao.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -73,8 +74,44 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/deleteCategory")
-    public ApiResult<Void> deleteCategory(@RequestBody CategoryReq categoryReq) {
-        categoryService.deleteCategory(categoryReq);
+    public ApiResult<Void> deleteCategory(@RequestParam("id") Long id) {
+        categoryService.deleteCategory(id);
+        return ApiResult.success();
+    }
+
+    /**
+     * 根据id获取二级类目
+     * @return
+     */
+    @GetMapping("/getCategoryItems")
+    public ApiResult<List<CategoryItem>> getCategoryItem(@RequestParam("id") Long id) {
+        return ApiResult.success(categoryService.getCategoryItems(id));
+    }
+
+    /**
+     * 新增二级类目
+     * @return
+     */
+    @PostMapping("/addCategoryItem")
+    public ApiResult<Void> addCategoryItem() {
+        return ApiResult.success();
+    }
+
+    /**
+     * 修改二级类目
+     * @return
+     */
+    @PostMapping("/editCategoryItem")
+    public ApiResult<Void> editCategoryItem() {
+        return ApiResult.success();
+    }
+
+    /**
+     * 删除二级类目
+     * @return
+     */
+    @PostMapping("/deleteCategoryItem")
+    public ApiResult<Void> deleteCategoryItem() {
         return ApiResult.success();
     }
 }

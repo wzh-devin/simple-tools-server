@@ -44,9 +44,6 @@ public class Category {
     @TableField("update_time")
     private LocalDateTime updateTime;
 
-    @TableField(exist = false)
-    private List<CategoryItem> items;
-
     /**
      * 填充时间
      */

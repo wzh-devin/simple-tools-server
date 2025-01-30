@@ -14,12 +14,12 @@ public class CategoryReq {
     /**
      * 类别id
      */
-    private Long categoryId;
+    private Long id;
 
     /**
      * 类别名
      */
-    private String categoryName;
+    private String name;
 
     /**
      * 类别描述

@@ -1,6 +1,7 @@
 package com.devin.simpletools_server.service.v1.taobao;
 
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
+import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
 import com.devin.simpletools_server.domain.vo.req.CategoryReq;
 
 import java.util.List;
@@ -41,7 +42,14 @@ public interface CategoryService {
 
     /**
      * 删除一级类目
-     * @param categoryReq
+     * @param id
      */
-    void deleteCategory(CategoryReq categoryReq);
+    void deleteCategory(Long id);
+
+    /**
+     * 根据id查询二级类目
+     * @param id
+     * @return
+     */
+    List<CategoryItem> getCategoryItems(Long id);
 }

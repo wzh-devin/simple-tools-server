@@ -33,14 +33,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllList() {
-        List<Category> categoryList = categoryDao.getAllList();
-        return packageItems(categoryList);
+        return categoryDao.getAllList();
     }
 
     @Override
     public List<Category> getListByParams(CategoryReq categoryReq) {
-        List<Category> categoryList = categoryDao.getAllListByParams(categoryReq);
-        return packageItems(categoryList);
+        return categoryDao.getAllListByParams(categoryReq);
     }
 
     @Override
@@ -62,28 +60,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(CategoryReq categoryReq) {
-        Category category = BuilderEntity.buildCategory(categoryReq, OperateTypeEnum.DELETE);
-
+    public void deleteCategory(Long id) {
         // 判断是否存在子类别
-        List<CategoryItem> categoryItemList = categoryItemDao.getItemsByCategory(category.getId());
+        List<CategoryItem> categoryItemList = categoryItemDao.getItemsByCategory(id);
         AssertUtil.isEmpty(categoryItemList, "类目删除失败，该类目存在子类别");
 
         // 删除一级类目
-        boolean delResult = categoryDao.removeById(category);
+        boolean delResult = categoryDao.removeById(id);
         AssertUtil.isTrue(delResult, "类目删除失败");
     }
 
-    /**
-     * 包装子类
-     * @param categoryList
-     * @return
-     */
-    private List<Category> packageItems(List<Category> categoryList) {
-        return categoryList.stream()
-                .peek(category -> {
-                    // 获取包装子类别
-                    category.setItems(categoryItemDao.getItemsByCategory(category.getId()));
-                }).toList();
+    @Override
+    public List<CategoryItem> getCategoryItems(Long id) {
+        return categoryItemDao.getItemsByCategory(id);
     }
 }

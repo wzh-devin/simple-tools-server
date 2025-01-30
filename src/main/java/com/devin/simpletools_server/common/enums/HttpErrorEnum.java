@@ -1,9 +1,7 @@
 package com.devin.simpletools_server.common.enums;
 
-import ch.qos.logback.core.util.ContentTypeUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.devin.simpletools_server.common.utils.ApiResult;
-import jdk.jfr.ContentType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

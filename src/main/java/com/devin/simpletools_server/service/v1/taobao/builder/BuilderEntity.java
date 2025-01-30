@@ -30,10 +30,10 @@ public class BuilderEntity {
             category.setId(SnowFlake.nextId());
             category.fillTime();
         } else {
-            category.setId(categoryReq.getCategoryId());
+            category.setId(categoryReq.getId());
             category.setUpdateTime(LocalDateTime.now());
         }
-        category.setName(categoryReq.getCategoryName());
+        category.setName(categoryReq.getName());
         category.setDescription(categoryReq.getDescription());
         category.setIsActive(categoryReq.getIsActive());
         return category;
