@@ -14,6 +14,7 @@ import com.devin.simpletools_server.domain.vo.req.CommodityReq;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * 2025/1/17 22:53
@@ -106,13 +107,13 @@ public class BuilderEntity {
             categoryItem.setId(SnowFlake.nextId());
             categoryItem.fillTime();
         } else {
-            categoryItem.setId(categoryItemReq.getItemId());
+            categoryItem.setId(categoryItemReq.getId());
             categoryItem.setUpdateTime(LocalDateTime.now());
         }
         categoryItem.setName(categoryItemReq.getName());
         categoryItem.setDescription(categoryItemReq.getDescription());
         categoryItem.setIsActive(Objects.isNull(categoryItemReq.getIsActive()) ? 1 : categoryItemReq.getIsActive());
-        categoryItem.setCategoryId(categoryItemReq.getId());
+        categoryItem.setCategoryId(categoryItemReq.getCategoryId());
         return categoryItem;
 
     }

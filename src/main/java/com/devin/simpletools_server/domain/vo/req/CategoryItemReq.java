@@ -14,5 +14,5 @@ public class CategoryItemReq extends CategoryReq {
     /**
      * 二级类目id
      */
-    private Long itemId;
+    private Long categoryId;
 }
