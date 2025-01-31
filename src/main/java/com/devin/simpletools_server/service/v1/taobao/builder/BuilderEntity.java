@@ -7,6 +7,7 @@ import com.devin.simpletools_server.domain.dto.CommodityDto;
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
 import com.devin.simpletools_server.domain.eneity.taobao.Commodity;
+import com.devin.simpletools_server.domain.vo.req.CategoryItemReq;
 import com.devin.simpletools_server.domain.vo.req.CategoryReq;
 import com.devin.simpletools_server.domain.vo.req.CommodityReq;
 
@@ -91,5 +92,28 @@ public class BuilderEntity {
         commodity.setIsActive(commodityReq.getIsActive());
         commodity.setCategoryItemId(commodityReq.getCategoryItemId());
         return commodity;
+    }
+
+    /**
+     * 构建二级类目实体
+     * @param categoryItemReq
+     * @param operate
+     * @return
+     */
+    public static CategoryItem buildCategoryItem(CategoryItemReq categoryItemReq, OperateTypeEnum operate) {
+        CategoryItem categoryItem = new CategoryItem();
+        if (OperateTypeEnum.ADD.equals(operate)) {
+            categoryItem.setId(SnowFlake.nextId());
+            categoryItem.fillTime();
+        } else {
+            categoryItem.setId(categoryItemReq.getItemId());
+            categoryItem.setUpdateTime(LocalDateTime.now());
+        }
+        categoryItem.setName(categoryItemReq.getName());
+        categoryItem.setDescription(categoryItemReq.getDescription());
+        categoryItem.setIsActive(Objects.isNull(categoryItemReq.getIsActive()) ? 1 : categoryItemReq.getIsActive());
+        categoryItem.setCategoryId(categoryItemReq.getId());
+        return categoryItem;
+
     }
 }

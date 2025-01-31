@@ -4,6 +4,7 @@ import com.devin.simpletools_server.common.annocation.ApiV1;
 import com.devin.simpletools_server.common.utils.ApiResult;
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
+import com.devin.simpletools_server.domain.vo.req.CategoryItemReq;
 import com.devin.simpletools_server.domain.vo.req.CategoryReq;
 import com.devin.simpletools_server.service.v1.taobao.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -93,7 +94,8 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/addCategoryItem")
-    public ApiResult<Void> addCategoryItem() {
+    public ApiResult<Void> addCategoryItem(@RequestBody CategoryItemReq categoryItemReq) {
+        categoryService.addCategoryItem(categoryItemReq);
         return ApiResult.success();
     }
 
