@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.devin</groupId>
-    <artifactId>SimpleTools_Server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>SimpleTools</artifactId>
+    <version>V1.0</version>
     <name>SimpleTools_Server</name>
     <description>简单工具集合服务</description>
     <properties>
