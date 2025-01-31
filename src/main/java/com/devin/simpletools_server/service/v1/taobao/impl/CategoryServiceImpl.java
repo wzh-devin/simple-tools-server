@@ -83,4 +83,17 @@ public class CategoryServiceImpl implements CategoryService {
         boolean saveResult = categoryItemDao.save(categoryItem);
         AssertUtil.isTrue(saveResult, "新增二级类目失败");
     }
+
+    @Override
+    public void editCategoryItem(CategoryItemReq categoryItemReq) {
+        CategoryItem categoryItem = BuilderEntity.buildCategoryItem(categoryItemReq, OperateTypeEnum.UPDATE);
+        boolean updateResult = categoryItemDao.updateById(categoryItem);
+        AssertUtil.isTrue(updateResult, "修改二级类目失败");
+    }
+
+    @Override
+    public void deleteCategoryItem(Long id) {
+        boolean delResult = categoryItemDao.removeById(id);
+        AssertUtil.isTrue(delResult, "删除二级类目失败");
+    }
 }

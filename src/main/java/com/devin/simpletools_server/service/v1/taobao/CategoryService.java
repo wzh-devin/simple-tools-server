@@ -59,4 +59,16 @@ public interface CategoryService {
      * @param categoryItemReq
      */
     void addCategoryItem(CategoryItemReq categoryItemReq);
+
+    /**
+     * 修改二级类目
+     * @param categoryItemReq
+     */
+    void editCategoryItem(CategoryItemReq categoryItemReq);
+
+    /**
+     * 根据id，删除二级类目
+     * @param id
+     */
+    void deleteCategoryItem(Long id);
 }

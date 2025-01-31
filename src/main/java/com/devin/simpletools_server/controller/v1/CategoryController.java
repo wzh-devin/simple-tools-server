@@ -90,7 +90,6 @@ public class CategoryController {
     }
 
     /**
-     * TODO 新增二级类目
      * @return
      */
     @PostMapping("/addCategoryItem")
@@ -100,20 +99,20 @@ public class CategoryController {
     }
 
     /**
-     * TODO 修改二级类目
      * @return
      */
     @PostMapping("/editCategoryItem")
-    public ApiResult<Void> editCategoryItem() {
+    public ApiResult<Void> editCategoryItem(@RequestBody CategoryItemReq categoryItemReq) {
+        categoryService.editCategoryItem(categoryItemReq);
         return ApiResult.success();
     }
 
     /**
-     * TODO 删除二级类目
      * @return
      */
     @PostMapping("/deleteCategoryItem")
-    public ApiResult<Void> deleteCategoryItem() {
+    public ApiResult<Void> deleteCategoryItem(@RequestParam("id") Long id) {
+        categoryService.deleteCategoryItem(id);
         return ApiResult.success();
     }
 }
