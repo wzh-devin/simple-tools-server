@@ -4,6 +4,7 @@ import com.devin.simpletools_server.common.annocation.ApiV1;
 import com.devin.simpletools_server.common.utils.ApiResult;
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
+import com.devin.simpletools_server.domain.vo.req.CategoryItemReq;
 import com.devin.simpletools_server.domain.vo.req.CategoryReq;
 import com.devin.simpletools_server.service.v1.taobao.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -89,29 +90,29 @@ public class CategoryController {
     }
 
     /**
-     * 新增二级类目
      * @return
      */
     @PostMapping("/addCategoryItem")
-    public ApiResult<Void> addCategoryItem() {
+    public ApiResult<Void> addCategoryItem(@RequestBody CategoryItemReq categoryItemReq) {
+        categoryService.addCategoryItem(categoryItemReq);
         return ApiResult.success();
     }
 
     /**
-     * 修改二级类目
      * @return
      */
     @PostMapping("/editCategoryItem")
-    public ApiResult<Void> editCategoryItem() {
+    public ApiResult<Void> editCategoryItem(@RequestBody CategoryItemReq categoryItemReq) {
+        categoryService.editCategoryItem(categoryItemReq);
         return ApiResult.success();
     }
 
     /**
-     * 删除二级类目
      * @return
      */
     @PostMapping("/deleteCategoryItem")
-    public ApiResult<Void> deleteCategoryItem() {
+    public ApiResult<Void> deleteCategoryItem(@RequestParam("id") Long id) {
+        categoryService.deleteCategoryItem(id);
         return ApiResult.success();
     }
 }

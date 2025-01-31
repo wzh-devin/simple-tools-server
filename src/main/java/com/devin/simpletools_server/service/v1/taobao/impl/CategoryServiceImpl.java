@@ -6,6 +6,7 @@ import com.devin.simpletools_server.dao.v1.taobao.CategoryDao;
 import com.devin.simpletools_server.dao.v1.taobao.CategoryItemDao;
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
+import com.devin.simpletools_server.domain.vo.req.CategoryItemReq;
 import com.devin.simpletools_server.domain.vo.req.CategoryReq;
 import com.devin.simpletools_server.service.v1.taobao.CategoryService;
 import com.devin.simpletools_server.service.v1.taobao.builder.BuilderEntity;
@@ -73,5 +74,26 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryItem> getCategoryItems(Long id) {
         return categoryItemDao.getItemsByCategory(id);
+    }
+
+    @Override
+    public void addCategoryItem(CategoryItemReq categoryItemReq) {
+        // 构建二级类目实体
+        CategoryItem categoryItem = BuilderEntity.buildCategoryItem(categoryItemReq, OperateTypeEnum.ADD);
+        boolean saveResult = categoryItemDao.save(categoryItem);
+        AssertUtil.isTrue(saveResult, "新增二级类目失败");
+    }
+
+    @Override
+    public void editCategoryItem(CategoryItemReq categoryItemReq) {
+        CategoryItem categoryItem = BuilderEntity.buildCategoryItem(categoryItemReq, OperateTypeEnum.UPDATE);
+        boolean updateResult = categoryItemDao.updateById(categoryItem);
+        AssertUtil.isTrue(updateResult, "修改二级类目失败");
+    }
+
+    @Override
+    public void deleteCategoryItem(Long id) {
+        boolean delResult = categoryItemDao.removeById(id);
+        AssertUtil.isTrue(delResult, "删除二级类目失败");
     }
 }

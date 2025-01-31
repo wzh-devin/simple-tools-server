@@ -2,6 +2,7 @@ package com.devin.simpletools_server.service.v1.taobao;
 
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
+import com.devin.simpletools_server.domain.vo.req.CategoryItemReq;
 import com.devin.simpletools_server.domain.vo.req.CategoryReq;
 
 import java.util.List;
@@ -52,4 +53,22 @@ public interface CategoryService {
      * @return
      */
     List<CategoryItem> getCategoryItems(Long id);
+
+    /**
+     * 新增二级类目
+     * @param categoryItemReq
+     */
+    void addCategoryItem(CategoryItemReq categoryItemReq);
+
+    /**
+     * 修改二级类目
+     * @param categoryItemReq
+     */
+    void editCategoryItem(CategoryItemReq categoryItemReq);
+
+    /**
+     * 根据id，删除二级类目
+     * @param id
+     */
+    void deleteCategoryItem(Long id);
 }
