@@ -81,15 +81,25 @@ public class CategoryController {
     }
 
     /**
-     * 根据id获取二级类目
+     * 获取所有的二级类目
      * @return
      */
     @GetMapping("/getCategoryItems")
-    public ApiResult<List<CategoryItem>> getCategoryItem(@RequestParam("id") Long id) {
-        return ApiResult.success(categoryService.getCategoryItems(id));
+    public ApiResult<List<CategoryItem>> getCategoryItems() {
+        return ApiResult.success(categoryService.getCategoryItems());
     }
 
     /**
+     * 根据id获取二级类目
+     * @return
+     */
+    @GetMapping("/getCategoryItemsId")
+    public ApiResult<List<CategoryItem>> getCategoryItem(@RequestParam("id") Long id) {
+        return ApiResult.success(categoryService.getCategoryItemsId(id));
+    }
+
+    /**
+     * 新增二级类目
      * @return
      */
     @PostMapping("/addCategoryItem")
@@ -99,6 +109,7 @@ public class CategoryController {
     }
 
     /**
+     * 修改二级类目
      * @return
      */
     @PostMapping("/editCategoryItem")
@@ -108,6 +119,7 @@ public class CategoryController {
     }
 
     /**
+     * 删除二级类目
      * @return
      */
     @PostMapping("/deleteCategoryItem")

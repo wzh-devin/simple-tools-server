@@ -72,7 +72,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryItem> getCategoryItems(Long id) {
+    public List<CategoryItem> getCategoryItems() {
+        return categoryItemDao.list();
+    }
+
+    @Override
+    public List<CategoryItem> getCategoryItemsId(Long id) {
         return categoryItemDao.getItemsByCategory(id);
     }
 

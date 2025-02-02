@@ -48,11 +48,17 @@ public interface CategoryService {
     void deleteCategory(Long id);
 
     /**
-     * 根据id查询二级类目
+     * 查询所有的二级类目
+     * @return
+     */
+    List<CategoryItem> getCategoryItems();
+
+    /**
+     * 根据id，插叙二级类目
      * @param id
      * @return
      */
-    List<CategoryItem> getCategoryItems(Long id);
+    List<CategoryItem> getCategoryItemsId(Long id);
 
     /**
      * 新增二级类目
