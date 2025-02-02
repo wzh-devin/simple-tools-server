@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.devin.simpletools_server.mapper")
-public class SimpleToolsServerApplication {
+public class SimpleTools {
 
     public static void main(String[] args) {
-        SpringApplication.run(SimpleToolsServerApplication.class, args);
+        SpringApplication.run(SimpleTools.class, args);
     }
 
 }
