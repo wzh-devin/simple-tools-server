@@ -85,9 +85,9 @@ public class CommodityController {
      * @param commodityLink
      * @return
      */
-    @PostMapping("/addLinks")
-    public ApiResult<Void> addLinks(@RequestBody CommodityLink commodityLink) {
-        commodityService.addLinks(commodityLink);
+    @PostMapping("/addLink")
+    public ApiResult<Void> addLink(@RequestBody CommodityLink commodityLink) {
+        commodityService.addLink(commodityLink);
         return ApiResult.success();
     }
 
@@ -96,9 +96,9 @@ public class CommodityController {
      * @param commodityLink
      * @return
      */
-    @PostMapping("/editLinks")
+    @PostMapping("/editLink")
     public ApiResult<Void> editLinks(@RequestBody CommodityLink commodityLink) {
-        commodityService.editLinks(commodityLink);
+        commodityService.editLink(commodityLink);
         return ApiResult.success();
     }
 
@@ -108,8 +108,8 @@ public class CommodityController {
      * @return
      */
     @PostMapping("/deleteLinks")
-    public ApiResult<Void> deleteLinks(@RequestParam("linkIds") List<Long> linkIds) {
-        commodityService.batchDeleteLinks(linkIds);
+    public ApiResult<Void> deleteLinks(@RequestBody List<Long> linkIds) {
+        commodityService.batchDeleteLink(linkIds);
         return ApiResult.success();
     }
 }

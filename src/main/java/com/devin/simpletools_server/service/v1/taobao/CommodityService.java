@@ -51,17 +51,17 @@ public interface CommodityService {
      * 新增商品链接信息
      * @param commodityLink
      */
-    void addLinks(CommodityLink commodityLink);
+    void addLink(CommodityLink commodityLink);
 
     /**
      * 修改商品链接
      * @param commodityLink
      */
-    void editLinks(CommodityLink commodityLink);
+    void editLink(CommodityLink commodityLink);
 
     /**
      * 批量删除链接
      * @param linkIds
      */
-    void batchDeleteLinks(List<Long> linkIds);
+    void batchDeleteLink(List<Long> linkIds);
 }

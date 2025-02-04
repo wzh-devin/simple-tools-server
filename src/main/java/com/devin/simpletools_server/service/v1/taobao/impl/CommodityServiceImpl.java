@@ -6,7 +6,6 @@ import com.devin.simpletools_server.dao.v1.taobao.CategoryDao;
 import com.devin.simpletools_server.dao.v1.taobao.CategoryItemDao;
 import com.devin.simpletools_server.dao.v1.taobao.CommodityDao;
 import com.devin.simpletools_server.dao.v1.taobao.CommodityLinkDao;
-import com.devin.simpletools_server.domain.dto.CategoryItemDto;
 import com.devin.simpletools_server.domain.dto.CommodityDto;
 import com.devin.simpletools_server.domain.eneity.taobao.Category;
 import com.devin.simpletools_server.domain.eneity.taobao.CategoryItem;
@@ -92,26 +91,27 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     public List<CommodityLink> getLinks(Long commodityId) {
-        return commodityLinkDao.selectByCommodityId(commodityId);
+        return commodityLinkDao.selectByCommodityId(commodityId).stream()
+                .peek(commodityLink -> commodityLink.setOperSys(commodityLink.getOperSys().toLowerCase())).toList();
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void addLinks(CommodityLink commodityLink) {
+    public void addLink(CommodityLink commodityLink) {
         boolean saveResult = commodityLinkDao.save(commodityLink);
         AssertUtil.isTrue(saveResult, "新增链接失败");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void editLinks(CommodityLink commodityLink) {
+    public void editLink(CommodityLink commodityLink) {
         boolean updateResult = commodityLinkDao.updateById(commodityLink);
         AssertUtil.isTrue(updateResult, "修改链接失败");
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void batchDeleteLinks(List<Long> linkIds) {
+    public void batchDeleteLink(List<Long> linkIds) {
         boolean deleteLinks = commodityLinkDao.removeBatchByIds(linkIds);
         AssertUtil.isTrue(deleteLinks, "批量删除链接失败");
     }

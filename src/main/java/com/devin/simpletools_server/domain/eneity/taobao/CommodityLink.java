@@ -3,6 +3,7 @@ package com.devin.simpletools_server.domain.eneity.taobao;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class CommodityLink {
     private Long id;
 
     @TableField("commodity_id")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long commodityId;
 
     @TableField("link")
