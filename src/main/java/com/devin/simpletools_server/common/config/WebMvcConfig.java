@@ -1,6 +1,7 @@
 package com.devin.simpletools_server.common.config;
 
 import com.devin.simpletools_server.common.annocation.ApiV1;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
