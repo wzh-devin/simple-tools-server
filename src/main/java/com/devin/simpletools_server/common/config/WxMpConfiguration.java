@@ -2,6 +2,8 @@ package com.devin.simpletools_server.common.config;
 
 import com.devin.simpletools_server.common.properties.WxMpProperties;
 import com.devin.simpletools_server.service.v1.login.handler.ScanHandler;
+import com.devin.simpletools_server.service.v1.login.handler.SubscribeHandler;
+import com.devin.simpletools_server.service.v1.login.handler.UnSubscribeHandler;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -10,8 +12,11 @@ import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
-import static me.chanjar.weixin.common.api.WxConsts.EventType.SUBSCRIBE;
+import javax.annotation.PostConstruct;
+
+import static me.chanjar.weixin.common.api.WxConsts.EventType.*;
 import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType.EVENT;
 
 /**
@@ -26,6 +31,13 @@ import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType.EVENT;
 @EnableConfigurationProperties(WxMpProperties.class)
 public class WxMpConfiguration {
 
+    @Lazy
+    private final SubscribeHandler subscribeHandler;
+
+    @Lazy
+    private final UnSubscribeHandler unSubscribeHandler;
+
+    @Lazy
     private final ScanHandler scanHandler;
 
     private final WxMpProperties properties;
@@ -53,8 +65,14 @@ public class WxMpConfiguration {
     public WxMpMessageRouter messageRouter(WxMpService wxMpService) {
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
 
+        // 微信用户关注执行路由
+        newRouter.rule().async(false).msgType(EVENT).event(SUBSCRIBE).handler(this.subscribeHandler).end();
+
+        // 微信用户取消关注执行路由
+        newRouter.rule().async(false).msgType(EVENT).event(UNSUBSCRIBE).handler(this.unSubscribeHandler).end();
+
         // 微信用户扫码执行路由
-        newRouter.rule().async(false).msgType(EVENT).event(SUBSCRIBE).handler(this.scanHandler);
+        newRouter.rule().async(false).msgType(EVENT).event(SCAN).handler(this.scanHandler).end();
 
         return newRouter;
     }
