@@ -33,4 +33,12 @@ public class LoginController {
         return ApiResult.success(loginService.accountLogin(loginReq));
     }
 
+    /**
+     * 获取微信的登录二维码
+     * @return
+     */
+    @GetMapping("/wx/qr")
+    public ApiResult<?> wxLogin() {
+        return ApiResult.success(loginService.wxLoginQR());
+    }
 }

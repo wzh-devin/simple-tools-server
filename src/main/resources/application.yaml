@@ -23,10 +23,10 @@ jwt:
 
 wx:
   mp:
-    appId: wxf22583ac5e4d8e45
-    secret: 18fc1698f4bd84b8fd0a6a4e07b19a1f
-    token: simpleTools
-    aesKey: FEIwZ6XXQlfmRpTsI1cOg93csc5bbxJoUIXXLswE3LD
+    appId: ${simpletools.wx.appId}
+    secret: ${simpletools.wx.secret}
+    token: ${simpletools.wx.token}
+    aesKey: ${simpletools.wx.aesKey}
 
 mybatis-plus:
   configuration:

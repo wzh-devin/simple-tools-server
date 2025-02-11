@@ -24,7 +24,7 @@ public class WxController {
     private final WxMpService wxMpService;
 
     /**
-     * 微信认证消息
+     * 微信认证服务需要调用的接口
      * @param signature 认证签名
      * @param timestamp 时间戳
      * @param nonce 随机数

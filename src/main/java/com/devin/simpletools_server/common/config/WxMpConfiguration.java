@@ -1,13 +1,18 @@
 package com.devin.simpletools_server.common.config;
 
 import com.devin.simpletools_server.common.properties.WxMpProperties;
+import com.devin.simpletools_server.service.v1.login.handler.ScanHandler;
 import lombok.AllArgsConstructor;
+import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import static me.chanjar.weixin.common.api.WxConsts.EventType.SUBSCRIBE;
+import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType.EVENT;
 
 /**
  * 2025/2/11 15:19
@@ -20,6 +25,8 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 @EnableConfigurationProperties(WxMpProperties.class)
 public class WxMpConfiguration {
+
+    private final ScanHandler scanHandler;
 
     private final WxMpProperties properties;
 
@@ -36,6 +43,20 @@ public class WxMpConfiguration {
         service.setWxMpConfigStorage(config);
 
         return service;
+    }
+
+    /**
+     * 配置路由规则
+     * @return
+     */
+    @Bean
+    public WxMpMessageRouter messageRouter(WxMpService wxMpService) {
+        final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
+
+        // 微信用户扫码执行路由
+        newRouter.rule().async(false).msgType(EVENT).event(SUBSCRIBE).handler(this.scanHandler);
+
+        return newRouter;
     }
 
 }
