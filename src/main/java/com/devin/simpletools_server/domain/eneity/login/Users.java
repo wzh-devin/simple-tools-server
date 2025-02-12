@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @since 1.0
  */
 @Data
+@Builder
 @TableName("users")
 public class Users {
     @TableId
@@ -33,6 +35,9 @@ public class Users {
 
     @TableField("update_time")
     private LocalDateTime updateTime;
+
+    @TableField("last_login")
+    private LocalDateTime lastLogin;
 
     /**
      * 填充时间

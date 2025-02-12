@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @since 1.0
  */
 @Data
+@Builder
 @TableName("wx_user")
 public class WxUser {
     @TableId
@@ -34,7 +36,7 @@ public class WxUser {
     @TableField("nickname")
     private String nickname;
 
-    @TableField("avatarUrl")
+    @TableField("avatar_url")
     private String avatarUrl;
 
     @TableField("create_time")

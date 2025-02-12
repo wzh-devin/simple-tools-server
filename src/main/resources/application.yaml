@@ -18,7 +18,16 @@ spring:
       username: ${simpletools.mysql.username}
       password: ${simpletools.mysql.password}
 
-jwt.secret: ${simpletools.jwt.secret}
+jwt:
+  secret: ${simpletools.jwt.secret}
+
+wx:
+  mp:
+    appId: ${simpletools.wx.appId}
+    secret: ${simpletools.wx.secret}
+    token: ${simpletools.wx.token}
+    aesKey: ${simpletools.wx.aesKey}
+    callback: ${simpletools.wx.callback}
 
 mybatis-plus:
   configuration:
