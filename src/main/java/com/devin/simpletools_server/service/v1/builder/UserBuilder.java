@@ -4,6 +4,7 @@ import com.devin.simpletools_server.common.enums.ActiveStatusEnum;
 import com.devin.simpletools_server.common.utils.SnowFlake;
 import com.devin.simpletools_server.domain.eneity.login.Users;
 import com.devin.simpletools_server.domain.eneity.login.WxUser;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 
 import java.time.LocalDateTime;
 
@@ -40,5 +41,19 @@ public class UserBuilder {
             .build();
         wxUser.fillTime();
         return wxUser;
+    }
+
+    /**
+     * 修改微信用户
+     * @param openid
+     * @param userInfo
+     * @return
+     */
+    public static WxUser buildWxUser(String openid, WxOAuth2UserInfo userInfo) {
+        return WxUser.builder().openid(openid)
+            .avatarUrl(userInfo.getHeadImgUrl())
+            .nickname(userInfo.getNickname())
+            .updateTime(LocalDateTime.now())
+            .build();
     }
 }

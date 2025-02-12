@@ -2,12 +2,18 @@ package com.devin.simpletools_server.service.v1.login.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.devin.simpletools_server.common.utils.ApiResult;
+import com.devin.simpletools_server.common.utils.AssertUtil;
 import com.devin.simpletools_server.common.utils.JwtUtil;
 import com.devin.simpletools_server.domain.eneity.login.AccountUser;
+import com.devin.simpletools_server.domain.eneity.login.Users;
+import com.devin.simpletools_server.domain.eneity.login.WxUser;
 import com.devin.simpletools_server.domain.vo.req.LoginReq;
 import com.devin.simpletools_server.domain.vo.resp.WxLoginURL;
 import com.devin.simpletools_server.mapper.v1.login.AccountUserMapper;
+import com.devin.simpletools_server.mapper.v1.login.UsersMapper;
+import com.devin.simpletools_server.mapper.v1.login.WxUserMapper;
 import com.devin.simpletools_server.service.v1.builder.BaseBuilder;
+import com.devin.simpletools_server.service.v1.builder.UserBuilder;
 import com.devin.simpletools_server.service.v1.login.LoginService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -38,10 +44,17 @@ public class LoginServiceImpl implements LoginService {
     private AccountUserMapper accountUserMapper;
 
     @Autowired
+    private UsersMapper usersMapper;
+
+    @Autowired
+    private WxUserMapper wxUserMapper;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
     private WxMpService wxMpService;
+
 
     @Override
     public String accountLogin(LoginReq loginReq) {
@@ -61,6 +74,16 @@ public class LoginServiceImpl implements LoginService {
         WxMpQrCodeTicket wxMpQrCodeTicket = wxMpService.getQrcodeService()
                 .qrCodeCreateTmpTicket(code, (int) DURATION.toSeconds());
         return BaseBuilder.buildResp(wxMpQrCodeTicket);
+    }
+
+    @Override
+    public void registerWx(String openId) {
+        Users user = UserBuilder.buildBaseUsers();
+        int userInsert = usersMapper.insert(user);
+        AssertUtil.isTrue(userInsert == 1, "微信用户注册失败");
+        WxUser wx = UserBuilder.buildWxUser(openId, user);
+        int wxInsert = wxUserMapper.insert(wx);
+        AssertUtil.isTrue(wxInsert == 1, "微信用户注册失败");
     }
 
     /**

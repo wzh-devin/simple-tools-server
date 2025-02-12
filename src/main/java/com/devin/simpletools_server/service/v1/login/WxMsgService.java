@@ -1,5 +1,6 @@
 package com.devin.simpletools_server.service.v1.login;
 
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 
@@ -18,4 +19,10 @@ public interface WxMsgService {
      * @return
      */
     WxMpXmlOutMessage scan(WxMpXmlMessage wxMpXmlMessage);
+
+    /**
+     * 微信授权登录函数
+     * @param userInfo
+     */
+    void authorize(WxOAuth2UserInfo userInfo);
 }

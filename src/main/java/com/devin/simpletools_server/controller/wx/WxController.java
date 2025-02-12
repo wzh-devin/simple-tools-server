@@ -1,13 +1,19 @@
 package com.devin.simpletools_server.controller.wx;
 
+import com.devin.simpletools_server.service.v1.login.WxMsgService;
+import com.devin.simpletools_server.service.v1.login.impl.WxMsgServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 
@@ -27,6 +33,7 @@ public class WxController {
     private final WxMpService wxMpService;
 
     private final WxMpMessageRouter wxMpMessageRouter;
+    private final WxMsgService wxMsgService;
 
     /**
      * 微信认证服务需要调用的接口
@@ -104,6 +111,22 @@ public class WxController {
 
         log.debug("\n组装回复信息：{}", out);
         return out;
+    }
+
+    /**
+     * TODO 重定向的地址
+     * @param code
+     * @return
+     */
+    @GetMapping("/callback")
+    public void callback(@RequestParam String code) throws WxErrorException {
+        log.info("code:{}", code);
+        // 通过code值，获取access_token
+        WxOAuth2AccessToken accessToken = wxMpService.getOAuth2Service().getAccessToken(code);
+        // 获取用户的基本信息
+        WxOAuth2UserInfo userInfo = wxMpService.getOAuth2Service().getUserInfo(accessToken, null);
+        // 用户信息授权
+        wxMsgService.authorize(userInfo);
     }
 
     private WxMpXmlOutMessage route(WxMpXmlMessage message) {

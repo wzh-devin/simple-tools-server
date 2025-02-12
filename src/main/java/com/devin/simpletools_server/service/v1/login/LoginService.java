@@ -26,4 +26,9 @@ public interface LoginService {
      * @return
      */
     ApiResult<?> wxLoginQR();
+
+    /**
+     * 注册微信用户
+     */
+    void registerWx(String openId);
 }
