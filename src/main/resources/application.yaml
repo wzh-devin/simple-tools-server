@@ -27,7 +27,7 @@ wx:
     secret: ${simpletools.wx.secret}
     token: ${simpletools.wx.token}
     aesKey: ${simpletools.wx.aesKey}
-    callback: https://2def583c.r25.cpolar.top
+    callback: ${simpletools.wx.callback}
 
 mybatis-plus:
   configuration:

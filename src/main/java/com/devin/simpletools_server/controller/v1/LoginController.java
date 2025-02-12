@@ -39,6 +39,6 @@ public class LoginController {
      */
     @GetMapping("/wx/qr")
     public ApiResult<?> wxLogin() {
-        return ApiResult.success(loginService.wxLoginQR());
+        return loginService.wxLoginQR();
     }
 }
