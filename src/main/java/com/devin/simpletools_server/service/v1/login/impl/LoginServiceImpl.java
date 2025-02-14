@@ -8,24 +8,23 @@ import com.devin.simpletools_server.domain.eneity.login.AccountUser;
 import com.devin.simpletools_server.domain.eneity.login.Users;
 import com.devin.simpletools_server.domain.eneity.login.WxUser;
 import com.devin.simpletools_server.domain.vo.req.LoginReq;
-import com.devin.simpletools_server.domain.vo.resp.WxLoginURL;
 import com.devin.simpletools_server.mapper.v1.login.AccountUserMapper;
 import com.devin.simpletools_server.mapper.v1.login.UsersMapper;
 import com.devin.simpletools_server.mapper.v1.login.WxUserMapper;
-import com.devin.simpletools_server.service.v1.builder.BaseBuilder;
+import com.devin.simpletools_server.websocket.builder.BaseBuilder;
 import com.devin.simpletools_server.service.v1.builder.UserBuilder;
 import com.devin.simpletools_server.service.v1.login.LoginService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * 2025/2/10 22:39
@@ -65,18 +64,19 @@ public class LoginServiceImpl implements LoginService {
         return "";
     }
 
-    @SneakyThrows
-    @Override
-    public ApiResult<?> wxLoginQR() {
-        // 生成随机登陆的code值
-        Integer code = generateLoginCode();
-        // 请求微信服务平台，返回临时的二维码
-        WxMpQrCodeTicket wxMpQrCodeTicket = wxMpService.getQrcodeService()
-                .qrCodeCreateTmpTicket(code, (int) DURATION.toSeconds());
-        return BaseBuilder.buildResp(wxMpQrCodeTicket);
-    }
+//    @SneakyThrows
+//    @Override
+//    public ApiResult<?> wxLoginQR() {
+//        // 生成随机登陆的code值
+//        Integer code = generateLoginCode();
+//        // 请求微信服务平台，返回临时的二维码
+//        WxMpQrCodeTicket wxMpQrCodeTicket = wxMpService.getQrcodeService()
+//                .qrCodeCreateTmpTicket(code, (int) DURATION.toSeconds());
+//        return BaseBuilder.buildResp(wxMpQrCodeTicket);
+//    }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void registerWx(String openId) {
         Users user = UserBuilder.buildBaseUsers();
         int userInsert = usersMapper.insert(user);
@@ -86,11 +86,11 @@ public class LoginServiceImpl implements LoginService {
         AssertUtil.isTrue(wxInsert == 1, "微信用户注册失败");
     }
 
-    /**
-     * 获取随机登录code码
-     * @return
-     */
-    private Integer generateLoginCode() {
-        return RandomUtil.randomInt(Integer.MAX_VALUE);
-    }
+//    /**
+//     * 获取随机登录code码
+//     * @return
+//     */
+//    private Integer generateLoginCode() {
+//        return RandomUtil.randomInt(Integer.MAX_VALUE);
+//    }
 }

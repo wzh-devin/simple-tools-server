@@ -21,11 +21,11 @@ public interface LoginService {
      */
     String accountLogin(LoginReq loginReq);
 
-    /**
-     * 获取登录二维码
-     * @return
-     */
-    ApiResult<?> wxLoginQR();
+//    /**
+//     * 获取登录二维码
+//     * @return
+//     */
+//    ApiResult<?> wxLoginQR();
 
     /**
      * 注册微信用户

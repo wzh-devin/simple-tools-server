@@ -1,4 +1,4 @@
-package com.devin.simpletools_server.service.v1.builder;
+package com.devin.simpletools_server.websocket.builder;
 
 import com.devin.simpletools_server.common.enums.RespTypeEnum;
 import com.devin.simpletools_server.common.utils.ApiResult;
@@ -26,4 +26,14 @@ public class BaseBuilder {
         return result;
     }
 
+    /**
+     * 构建返回信息
+     * @param token
+     * @return
+     */
+    public static ApiResult<?> buildResp(String token) {
+        ApiResult<String> result = new ApiResult<>();
+        result.setData(token);
+        return result;
+    }
 }

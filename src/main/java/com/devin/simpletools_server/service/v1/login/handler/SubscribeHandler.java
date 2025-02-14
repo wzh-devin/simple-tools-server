@@ -1,6 +1,7 @@
 package com.devin.simpletools_server.service.v1.login.handler;
 
 import com.devin.simpletools_server.service.v1.builder.TextBuilder;
+import com.devin.simpletools_server.service.v1.login.WxMsgService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -9,6 +10,7 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -26,6 +28,12 @@ import java.util.Map;
 @Component
 @Slf4j
 public class SubscribeHandler extends AbstractHandler {
+
+    private final WxMsgService wxMsgService;
+
+    public SubscribeHandler(@Lazy WxMsgService wxMsgService) {
+        this.wxMsgService = wxMsgService;
+    }
 
     /**
      * 公众号关注事件
@@ -63,7 +71,6 @@ public class SubscribeHandler extends AbstractHandler {
      */
     private WxMpXmlOutMessage handleSpecial(WxMpXmlMessage wxMpXmlMessage)
         throws Exception {
-        //TODO
-        return null;
+        return wxMsgService.scan(wxMpXmlMessage);
     }
 }
