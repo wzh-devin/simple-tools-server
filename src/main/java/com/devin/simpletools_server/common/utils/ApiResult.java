@@ -1,5 +1,6 @@
 package com.devin.simpletools_server.common.utils;
 
+import com.devin.simpletools_server.common.enums.RespTypeEnum;
 import lombok.Data;
 
 /**
@@ -16,6 +17,7 @@ public class ApiResult<T> {
     private Boolean success;
     private Integer errCode;
     private String errMsg;
+    private Object type;
     private T data;
 
     public static <T> ApiResult<T> success() {

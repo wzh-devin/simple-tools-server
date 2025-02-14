@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devin.simpletools_server.mapper.v1.login.AccountUserMapper">
+    <select id="getAccountUser" resultType="com.devin.simpletools_server.domain.eneity.login.AccountUser">
+        select *
+        from account_user
+        where username = #{loginReq.username}
+          and password = #{loginReq.password}
+    </select>
+</mapper>
