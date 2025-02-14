@@ -16,9 +16,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RespTypeEnum {
 
-    WX_LOGIN(1, "微信登录，二维码返回值"),
+    WX_LOGIN("1", "微信登录，二维码返回值"),
+    WX_TOKEN("2", "微信token"),
+    TOKEN_FALSE("3", "token失效")
     ;
 
-    private final Integer type;
+    private final String type;
     private final String desc;
 }

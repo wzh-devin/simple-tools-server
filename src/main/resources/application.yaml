@@ -10,7 +10,7 @@ spring:
   application:
     name: simple_tools
   profiles:
-    active: prod
+    active: dev
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver

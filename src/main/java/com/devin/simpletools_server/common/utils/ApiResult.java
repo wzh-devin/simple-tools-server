@@ -17,7 +17,7 @@ public class ApiResult<T> {
     private Boolean success;
     private Integer errCode;
     private String errMsg;
-    private Integer type;
+    private Object type;
     private T data;
 
     public static <T> ApiResult<T> success() {

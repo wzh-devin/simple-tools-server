@@ -2,11 +2,14 @@ package com.devin.simpletools_server.websocket.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson2.JSONObject;
+import com.auth0.jwt.interfaces.Claim;
+import com.devin.simpletools_server.common.enums.RespTypeEnum;
 import com.devin.simpletools_server.common.enums.WsTypeEnum;
 import com.devin.simpletools_server.common.event.UserOnlineEvent;
 import com.devin.simpletools_server.common.utils.ApiResult;
 import com.devin.simpletools_server.common.utils.JwtUtil;
 import com.devin.simpletools_server.domain.eneity.login.WxUser;
+import com.devin.simpletools_server.domain.vo.req.WsPing;
 import com.devin.simpletools_server.service.v1.login.LoginService;
 import com.devin.simpletools_server.service.v1.login.UserService;
 import com.devin.simpletools_server.websocket.WebSocketService;
@@ -23,7 +26,10 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.nio.ByteBuffer;
 import java.time.Duration;
+import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -63,15 +69,26 @@ public class WebSocketServiceImpl implements WebSocketService {
     public void onOpen(Session session, @PathParam("type") Integer type) {
         switch (WsTypeEnum.of(type)) {
             case SCAN_QR:
-                loginQR(session);
+                loginQR(session, RespTypeEnum.WX_LOGIN.getType());
                 break;
             default:
                 break;
         }
     }
 
+    @SneakyThrows
     @OnMessage
-    public void onMessage(String openId) {
+    public void onMessage(Session session, String message) {
+        // 接收心跳消息
+        WsPing wsPing = JSONObject.parseObject(message, WsPing.class);
+        if (WsTypeEnum.QR_PING.getDesc().equals(wsPing.getType())) {
+            loginQR(session, WsTypeEnum.QR_PONG.getDesc());
+        }
+        if (WsTypeEnum.LOGIN_PING.getDesc().equals(wsPing.getType())) {
+            // 处理登录逻辑
+//            sendMsg(session, BaseBuilder.buildPong(WsTypeEnum.LOGIN_PONG.getDesc()));
+            loginCheck(session, wsPing.getToken());
+        }
     }
 
     @OnError
@@ -84,24 +101,18 @@ public class WebSocketServiceImpl implements WebSocketService {
         log.info("onClose");
     }
 
-//    @SneakyThrows
-//    private <T> void sendMsg(Session session, T t) {
-//        // 需要知道具体的session对象，确定发送给哪个用户
-//        session.getBasicRemote().sendText()
-//    }
-
     /**
      * 生成临时二维码
      */
     @SneakyThrows
-    private void loginQR(Session session) {
+    private void loginQR(Session session, String type) {
         // 生成登陆的code值
         Integer code = generateCode(session);
         // 请求微信服务平台，返回临时的二维码
         WxMpQrCodeTicket wxMpQrCodeTicket = wxMpService.getQrcodeService().qrCodeCreateTmpTicket(code, (int) DURATION.toSeconds());
         // 将临时的二维码发送给前端
 //        session.getBasicRemote().sendText(JSONObject.toJSONString(BaseBuilder.buildResp(wxMpQrCodeTicket)));
-        sendMsg(session, BaseBuilder.buildResp(wxMpQrCodeTicket));
+        sendMsg(session, BaseBuilder.buildResp(wxMpQrCodeTicket, type));
     }
 
     @Override
@@ -122,6 +133,23 @@ public class WebSocketServiceImpl implements WebSocketService {
     @SneakyThrows
     private void sendMsg(Session session, ApiResult<?> apiResult) {
         session.getBasicRemote().sendText(JSONObject.toJSONString(apiResult));
+    }
+
+    /**
+     * 登录心跳检查
+     * @param session
+     * @param token
+     */
+    private void loginCheck(Session session, String token) {
+        // 校验token
+        Long openId = jwtUtil.getUidOrNull(token);
+        if (Objects.isNull(openId)) {
+            // TODO 发送校验失败消息，让用户重新登录
+            sendMsg(session, BaseBuilder.buildPong(WsTypeEnum.TOKEN_PONG_FALSE.getDesc()));
+            return;
+        }
+        // 发送成功消息，不用让用户继续操作
+        sendMsg(session, BaseBuilder.buildPong(WsTypeEnum.LOGIN_PONG.getDesc()));
     }
 
     /**

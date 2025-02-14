@@ -21,6 +21,12 @@ import java.util.stream.Collectors;
 public enum WsTypeEnum {
 
     SCAN_QR(1, "扫描二维码"),
+    TOKEN(2, "token信息"),
+    QR_PONG(3, "qr_pong"),
+    QR_PING(4, "qr_ping"),
+    LOGIN_PING(5, "login_ping"),
+    LOGIN_PONG(6, "login_pong"),
+    TOKEN_PONG_FALSE(7, "token_pong_fail"),
     OTHER(-1, "其他"),
     ;
 
