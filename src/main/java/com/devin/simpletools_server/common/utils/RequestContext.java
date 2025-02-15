@@ -11,13 +11,13 @@ package com.devin.simpletools_server.common.utils;
  * @since 1.0
  */
 public class RequestContext {
-    private static final ThreadLocal<String> LOCAL = new ThreadLocal<>();
+    private static final ThreadLocal<Long> LOCAL = new ThreadLocal<>();
 
-    public static void setContext(String context) {
+    public static void setContext(Long context) {
         LOCAL.set(context);
     }
 
-    public static String getContext() {
+    public static Long getContext() {
         return LOCAL.get();
     }
 

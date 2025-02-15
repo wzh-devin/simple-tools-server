@@ -3,11 +3,14 @@ package com.devin.simpletools_server.websocket.impl;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.auth0.jwt.interfaces.Claim;
+import com.devin.simpletools_server.common.constant.RedisKey;
 import com.devin.simpletools_server.common.enums.RespTypeEnum;
 import com.devin.simpletools_server.common.enums.WsTypeEnum;
 import com.devin.simpletools_server.common.event.UserOnlineEvent;
 import com.devin.simpletools_server.common.utils.ApiResult;
 import com.devin.simpletools_server.common.utils.JwtUtil;
+import com.devin.simpletools_server.common.utils.RedisUtil;
+import com.devin.simpletools_server.common.utils.RequestContext;
 import com.devin.simpletools_server.domain.eneity.login.WxUser;
 import com.devin.simpletools_server.domain.vo.req.WsPing;
 import com.devin.simpletools_server.service.v1.login.LoginService;
@@ -124,6 +127,8 @@ public class WebSocketServiceImpl implements WebSocketService {
         WxUser user = userService.getWxUser(openId);
         // jwt加密
         String token = jwtUtil.createToken(user.getUserId());
+        // 保存用户到redis
+        RedisUtil.set(RedisKey.generateKey(RedisKey.USER_ONLINE_KEY, user.getUserId()), user.getUserId());
         // 通知用户最后一次上线信息
         applicationEventPublisher.publishEvent(new UserOnlineEvent(this, user));
         // 将token信息返回到前端
@@ -144,7 +149,6 @@ public class WebSocketServiceImpl implements WebSocketService {
         // 校验token
         Long openId = jwtUtil.getUidOrNull(token);
         if (Objects.isNull(openId)) {
-            // TODO 发送校验失败消息，让用户重新登录
             sendMsg(session, BaseBuilder.buildPong(WsTypeEnum.TOKEN_PONG_FALSE.getDesc()));
             return;
         }
