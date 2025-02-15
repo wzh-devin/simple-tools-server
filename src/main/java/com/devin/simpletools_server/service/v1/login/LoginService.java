@@ -31,4 +31,9 @@ public interface LoginService {
      * 注册微信用户
      */
     void registerWx(String openId);
+
+    /**
+     * 退出登录
+     */
+    void logout();
 }

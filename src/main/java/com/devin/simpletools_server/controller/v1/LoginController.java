@@ -21,30 +21,29 @@ import org.springframework.web.bind.annotation.*;
  */
 @ApiV1
 @RestController
-@RequestMapping("/login")
+@RequestMapping()
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
-
-    private final WebSocketService webSocketWxServer;
 
     /**
      * 用户账号登录接口
      *
      * @return
      */
-    @PostMapping("/account")
+    @PostMapping("/login/account")
     public ApiResult<String> accountLogin(@RequestBody LoginReq loginReq) {
         return ApiResult.success(loginService.accountLogin(loginReq));
     }
 
     /**
-     //     * 获取微信的登录二维码
-     //     * @return
-     //     */
-//    @GetMapping("/wx/qr")
-//    public ApiResult<?> wxLogin() {
-//        return loginService.wxLoginQR();
-//    }
+     * 退出登录
+     * @return
+     */
+    @PostMapping("/logout")
+    public ApiResult<Void> logout() {
+        loginService.logout();
+        return ApiResult.success();
+    }
 }
