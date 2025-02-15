@@ -19,8 +19,8 @@ spring:
         password: ${simpletools.mysql.password}
     redis:
         database: 0
-        host: 118.25.64.160
-        password: wzh7230610
+        host: ${simpletools.redis.host}
+        password: ${simpletools.redis.password}
         timeout: 6000
         jedis:
             pool:
