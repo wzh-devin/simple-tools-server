@@ -1,6 +1,7 @@
 package com.devin.simpletools_server.common.utils;
 
 import com.alibaba.druid.util.StringUtils;
+import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
@@ -27,7 +28,8 @@ public class JwtUtil {
     /**
      * Token密钥
      */
-    @Value("${jwt.secret}")
+//    @Value("${jwt.secret}")
+    @NacosValue(value = "${jwt.secret}", autoRefreshed = true)
     private String secret;
 
     public static final String UID_CLAIM = "uid";
@@ -35,18 +37,20 @@ public class JwtUtil {
 
     /**
      * 生成Token
+     *
      * @param uid
      * @return
      */
     public String createToken(Long uid) {
         return JWT.create()
-                .withClaim(UID_CLAIM, uid)
-                .withClaim(CREATE_TIME, new Date())
-                .sign(Algorithm.HMAC256(secret));
+            .withClaim(UID_CLAIM, uid)
+            .withClaim(CREATE_TIME, new Date())
+            .sign(Algorithm.HMAC256(secret));
     }
 
     /**
      * 解密token
+     *
      * @param token
      * @return
      */
@@ -55,20 +59,21 @@ public class JwtUtil {
             return null;
         }
         return JWT.require(Algorithm.HMAC256(secret))
-                .build()
-                .verify(token)
-                .getClaims();
+            .build()
+            .verify(token)
+            .getClaims();
     }
 
     /**
      * 从token中获取uid
+     *
      * @param token
      * @return
      */
     public Long getUidOrNull(String token) {
         return Optional.ofNullable(verifyToken(token))
-                .map(claim -> claim.get("uid"))
-                .map(Claim::asLong)
-                .orElse(null);
+            .map(claim -> claim.get("uid"))
+            .map(Claim::asLong)
+            .orElse(null);
     }
 }
